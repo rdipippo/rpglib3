@@ -1,0 +1,29 @@
+{
+  "name": "rpglib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^3.6.0",
+    "mongoose": "^5.9.27"
+  },
+  "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.1",
+    "jest": "^26.2.2",
+    "mock-mongoose": "^8.0.1-a"
+  },
+  "jest": {
+    "rootDir": "src/test",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "testEnvironment": "node",
+    "preset": "@shelf/jest-mongodb"
+  }
+}
