@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-let StaticModifier = require("./StaticModifier").model;
-let staticModifierSchema = require("./StaticModifier").schema
-let percentModifierSchema = require("./PercentModifier").schema
+let modifierSchema = require("./Modifier").modifierSchema;
 
-let gameStateFieldSchema = new Schema({baseVal: Number, modifiers: [staticModifierSchema|percentModifierSchema]});
+const gameStateFieldSchema = new Schema({
+    baseVal: Number,
+    modifiers: [modifierSchema]
+});
 
 gameStateFieldSchema.methods.value =
     function() {
