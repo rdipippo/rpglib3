@@ -1,28 +1,42 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-const gameStateFieldSchema = require("./GameStateField").schema;
-const characterClasses = require('./CharacterClasses');
+let StaticModfifier = require('./StaticModifier');
 
-let gameStateSchema = new Schema({field1: gameStateFieldSchema,
-                                  characterClass: {
-                                     type: String,
-                                     enum: characterClasses.dbList
-                                  },
-                                  inventory: []});
-
-gameStateSchema.methods.applyModifier =
-    function(modifier) {
-       let field = this[modifier.fieldName];
-       field.modify(modifier);
+class GameState {
+    constructor(schema) {
+        this.schema = schema;
     }
 
-gameStateSchema.methods.unapplyModifier =
-    function(modifier) {
-        let field = this[modifier.fieldName];
-        field.revert(modifier);
-    }
+    applyModifier =
+        function(modifier) {
+           let field = this.schema[modifier.fieldName];
+           field.modifiers.push(modifier);
+        }
 
-module.exports = {
-   model: mongoose.model('gameState', gameStateSchema),
-   schema: gameStateSchema
-};
+    unapplyModifier =
+        function(revertedModifier) {
+            let field = this.schema[revertedModifier.fieldName];
+        
+            field.modifiers.forEach(modifier => {
+               if (modifier.sourceId.toString() === revertedModifier.sourceId.toString()) {
+                    field.modifiers = field.modifiers.filter((value, index, arr) => {
+                        return value.sourceId.toString() !== revertedModifier.sourceId.toString();
+                    })
+                }
+            });
+        }
+    
+    getFieldValue = 
+        function(fieldName) {
+            let field = this.schema[fieldName]
+            let totalModifier = 0;
+
+            field.modifiers.forEach(modifier => {
+                let modifierObj = eval("let " + modifier.type + " = require('./" + modifier.type + "'); new " + modifier.type + "(" + JSON.stringify(modifier.args) + ")");
+                let individualModifier = modifierObj.apply(field.baseVal);
+                totalModifier += individualModifier;
+            });
+
+            return field.baseVal + totalModifier;
+        }   
+ }
+
+ module.exports = GameState;
