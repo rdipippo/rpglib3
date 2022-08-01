@@ -9,8 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "class-transformer": "^0.5.1",
+    "crypto-js": "^4.1.1",
     "mongodb": "^3.6.0",
-    "mongoose": "^5.9.27"
+    "mongoose": "^5.9.27",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.1",

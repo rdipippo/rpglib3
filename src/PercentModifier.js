@@ -1,10 +1,11 @@
 class PercentModifier {
     constructor(args) {
         this.amount = args.value;
+        this.fieldName = args.fieldName
     }
     
     apply = function(baseVal) {
-        return (this.amount / 100) * baseVal;
+        return Math.ceil((this.amount / 100) * baseVal);
     };
 
     unapply = function(baseVal) {

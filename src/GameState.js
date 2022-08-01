@@ -1,4 +1,4 @@
-let StaticModfifier = require('./StaticModifier');
+let MD5 = require("crypto-js/md5");
 
 class GameState {
     constructor(schema) {
@@ -8,6 +8,12 @@ class GameState {
     applyModifier =
         function(modifier) {
            let field = this.schema[modifier.fieldName];
+
+           if (field.modifiers === undefined) {
+               field.modifiers = [];
+           }
+
+           modifier.sourceId = MD5(modifier).toString()
            field.modifiers.push(modifier);
         }
 
@@ -30,12 +36,11 @@ class GameState {
             let totalModifier = 0;
 
             field.modifiers.forEach(modifier => {
-                let modifierObj = eval("let " + modifier.type + " = require('./" + modifier.type + "'); new " + modifier.type + "(" + JSON.stringify(modifier.args) + ")");
-                let individualModifier = modifierObj.apply(field.baseVal);
+                let individualModifier = modifier.apply(field.value);
                 totalModifier += individualModifier;
             });
 
-            return field.baseVal + totalModifier;
+            return field.value + totalModifier;
         }   
  }
 
