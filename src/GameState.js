@@ -14,7 +14,7 @@ class GameState {
                field.modifiers = [];
            }
 
-           modifier.sourceId = MD5(modifier).toString()
+           modifier.sourceId = MD5(JSON.stringify(modifier)).toString()
            field.modifiers.push(modifier);
         }
 

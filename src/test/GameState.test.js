@@ -13,7 +13,7 @@ test('Static Modifier', () => {
 
     gs.unapplyModifier(sMod);
 
-    expect(gs.schema['strength'].value).toEqual(12)
+    expect(gs.getFieldValue('strength')).toEqual(12)
 });
 
 test('Percent Modifier', () => {
@@ -26,7 +26,7 @@ test('Percent Modifier', () => {
 
     gs.unapplyModifier(sMod);
 
-    expect(gs.schema['strength'].value).toEqual(12)
+    expect(gs.getFieldValue('strength')).toEqual(12)
 });
 
 test('Percent then Static Modifier', () => {
@@ -39,9 +39,9 @@ test('Percent then Static Modifier', () => {
 
     expect(gs.getFieldValue('strength')).toEqual(19)
 
-    gs.unapplyModifier(sMod);
+    gs.unapplyModifier(pMod);
 
-    expect(gs.schema['strength'].value).toEqual(12)
+    expect(gs.getFieldValue('strength')).toEqual(15)
 })
 
 test('Static then Percent Modifier', () => {
@@ -56,7 +56,7 @@ test('Static then Percent Modifier', () => {
 
     gs.unapplyModifier(sMod);
 
-    expect(gs.schema['strength'].value).toEqual(12)
+    expect(gs.getFieldValue('strength')).toEqual(16)
 })
 
 test('Serialize class', () => {
