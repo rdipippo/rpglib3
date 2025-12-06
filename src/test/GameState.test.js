@@ -1,7 +1,7 @@
 let GameState = require("../GameState");
 let StaticModifier = require("../StaticModifier")
-let transform = require('class-transformer');
 const PercentModifier = require("../PercentModifier");
+let CustomModifier = require("../CustomModifier");
 
 test('Static Modifier', () => {
     let gs = new GameState({'strength': {value: 12}})
@@ -59,30 +59,26 @@ test('Static then Percent Modifier', () => {
     expect(gs.schema['strength'].value).toEqual(12)
 })
 
-class User {
-    id;
-    firstName;
-    lastName;
-    age;
-
-    getName() {
-        return this.firstName + ' ' + this.lastName;
-    }
-
-    isAdult() {
-        return this.age > 36 && this.age < 60;
-    }
-}
-
 test('Serialize class', () => {
-    /*let sMod = new StaticModifier({fieldName: 'strength', value: 3})
-    let x = transform.classToPlain(sMod);
-    let y = transform.plainToClass(StaticModifier, x);*/
-    let a = new User();
-    a.age = 37
-    a.firstName = 'Rich'
-    a.lastName = 'DiPippo'
-    let x = transform.classToPlain(a);
-    let y = transform.plainToClass(User, x);
-    let dsh = true;
+    let sMod = new StaticModifier({fieldName: 'strength', value: 3})
+    let x = JSON.stringify(sMod);
+    let y = JSON.parse(x);
+    expect(y.fieldName).toEqual('strength')
+    expect(y.amount).toEqual(3)
+    let sm = new StaticModifier(y);
+    Object.assign(sm, y);
+    expect(sm.apply(null, 12)).toEqual(3)
+})
+
+test('Custom Modifier', () => {
+    let gs = new GameState({'strength': {value: 12}})
+    let cMod = new CustomModifier({fieldName: 'strength', apply: (gameState, baseVal) => { return 3 }})
+
+    gs.applyModifier(cMod);
+
+    expect(gs.getFieldValue('strength')).toEqual(15)
+
+    gs.unapplyModifier(cMod);
+
+    expect(gs.getFieldValue('strength')).toEqual(12)
 })

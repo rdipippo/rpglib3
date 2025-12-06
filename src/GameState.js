@@ -37,7 +37,7 @@ class GameState {
             let totalModifier = 0;
 
             field.modifiers.forEach(modifier => {
-                let individualModifier = modifier.apply(field.value);
+                let individualModifier = modifier.apply(this, field.value);
                 totalModifier += individualModifier;
             });
 
