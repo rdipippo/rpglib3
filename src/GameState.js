@@ -1,4 +1,5 @@
 let MD5 = require("crypto-js/md5");
+let jp = require('jsonpath');
 
 class GameState {
     constructor(schema) {
@@ -7,7 +8,7 @@ class GameState {
 
     applyModifier =
         function(modifier) {
-           let field = this.schema[modifier.fieldName];
+           let field = jp.query(this.schema, "$." + modifier.fieldName)[0];
 
            if (field.modifiers === undefined) {
                field.modifiers = [];
@@ -19,7 +20,7 @@ class GameState {
 
     unapplyModifier =
         function(revertedModifier) {
-            let field = this.schema[revertedModifier.fieldName];
+            let field = jp.query(this.schema, "$." + revertedModifier.fieldName)[0];
         
             field.modifiers.forEach(modifier => {
                if (modifier.sourceId.toString() === revertedModifier.sourceId.toString()) {
@@ -32,7 +33,7 @@ class GameState {
     
     getFieldValue = 
         function(fieldName) {
-            let field = this.schema[fieldName]
+            let field = jp.query(this.schema, "$." + fieldName)[0];
             let totalModifier = 0;
 
             field.modifiers.forEach(modifier => {

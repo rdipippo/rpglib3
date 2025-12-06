@@ -11,8 +11,7 @@
   "dependencies": {
     "class-transformer": "^0.5.1",
     "crypto-js": "^4.1.1",
-    "mongodb": "^3.6.0",
-    "mongoose": "^5.9.27",
+    "jsonpath": "^1.1.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
@@ -26,7 +25,6 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
-    "testEnvironment": "node",
-    "preset": "@shelf/jest-mongodb"
+    "testEnvironment": "node"
   }
 }

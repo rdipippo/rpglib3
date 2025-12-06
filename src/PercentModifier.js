@@ -1,4 +1,6 @@
 class PercentModifier {
+    priority = 1;
+    
     constructor(args) {
         this.amount = args.value;
         this.fieldName = args.fieldName

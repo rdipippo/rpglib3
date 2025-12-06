@@ -31,8 +31,8 @@ test('Percent Modifier', () => {
 
 test('Percent then Static Modifier', () => {
     let gs = new GameState({'strength': {value: 12}})
-    let sMod = new StaticModifier({fieldName: 'strength', value: 3})
     let pMod = new PercentModifier({fieldName: 'strength', value: 33})
+    let sMod = new StaticModifier({fieldName: 'strength', value: 3})
 
     gs.applyModifier(pMod);
     gs.applyModifier(sMod);

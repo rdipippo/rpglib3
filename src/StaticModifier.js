@@ -1,4 +1,6 @@
 class StaticModifier {
+    priority = 2;
+    
     constructor(args) {
         this.amount = args.value;
         this.fieldName = args.fieldName
