@@ -4,6 +4,22 @@ let jp = require('jsonpath');
 class GameState {
     constructor(schema) {
         this.schema = schema;
+        this.eventListeners = [];
+    }
+
+    doAction =
+        function(actionType, params) {
+            for (let i = 0; i < this.eventListeners[actionType].length; i++) {
+                this.eventListeners[actionType][i].callback.apply(this.eventListeners[actionType][i].context, params);
+            }
+        }
+    
+    registerForEvent = 
+        function(actionType, callback, context) {
+        if (this.eventListeners[actionType] === undefined) {
+            this.eventListeners[actionType] = [];
+        }
+        this.eventListeners[actionType].push({callback: callback, context: context});
     }
 
     applyModifier =
@@ -16,6 +32,14 @@ class GameState {
 
            modifier.sourceId = MD5(JSON.stringify(modifier)).toString()
            field.modifiers.push(modifier);
+        }
+
+    applyTempModifier = 
+        function(modifier, numActions, actionType) {
+            modifier.numActions = numActions;
+            modifier.actionType = actionType;
+            this.applyModifier(modifier);
+            this.registerForEvent(actionType, (context, params) => { modifier.numActions--; if (modifier.numActions <= 0) { this.unapplyModifier(modifier); } }, this);
         }
 
     unapplyModifier =

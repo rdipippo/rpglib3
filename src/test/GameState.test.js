@@ -29,6 +29,23 @@ test('Percent Modifier', () => {
     expect(gs.getFieldValue('strength')).toEqual(12)
 });
 
+test('Temporary Modifier', () => {
+    let gs = new GameState({'strength': {value: 12}})
+    let sMod = new StaticModifier({fieldName: 'strength', value: 3})
+
+    gs.applyTempModifier(sMod, 2, 'endTurn');
+
+    expect(gs.getFieldValue('strength')).toEqual(15)
+
+    gs.doAction('endTurn');
+
+    expect(gs.getFieldValue('strength')).toEqual(15)
+
+    gs.doAction('endTurn');
+
+    expect(gs.getFieldValue('strength')).toEqual(12)
+})
+
 test('Percent then Static Modifier', () => {
     let gs = new GameState({'strength': {value: 12}})
     let pMod = new PercentModifier({fieldName: 'strength', value: 33})
