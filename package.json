@@ -19,7 +19,9 @@
     "rootDir": "src/test",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
+      "../**/*.{js,jsx}",
+      "!../src/test/**",
+      "!../node_modules/**"
     ],
     "testEnvironment": "node"
   }
