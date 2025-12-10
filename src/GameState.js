@@ -12,15 +12,16 @@ class GameState {
             for (let i = 0; i < this.eventListeners[actionType].length; i++) {
                 this.eventListeners[actionType][i].callback.apply(this.eventListeners[actionType][i].context, params);
             }
-        }
+        };
     
     registerForEvent = 
         function(actionType, callback, context) {
-        if (this.eventListeners[actionType] === undefined) {
-            this.eventListeners[actionType] = [];
-        }
-        this.eventListeners[actionType].push({callback: callback, context: context});
-    }
+            if (this.eventListeners[actionType] === undefined) {
+                this.eventListeners[actionType] = [];
+            }
+            
+            this.eventListeners[actionType].push({callback: callback, context: context});
+        };
 
     applyModifier =
         function(modifier) {
@@ -30,17 +31,17 @@ class GameState {
                field.modifiers = [];
            }
 
+           if (modifier.numActions !== undefined && modifier.actionType !== undefined) {
+               this.registerForEvent(modifier.actionType, (context, params) => { 
+                 modifier.numActions--; 
+                 if (modifier.numActions <= 0) { 
+                    this.unapplyModifier(modifier); } 
+                }, this);
+           }
+
            modifier.sourceId = MD5(JSON.stringify(modifier)).toString()
            field.modifiers.push(modifier);
-        }
-
-    applyTempModifier = 
-        function(modifier, numActions, actionType) {
-            modifier.numActions = numActions;
-            modifier.actionType = actionType;
-            this.applyModifier(modifier);
-            this.registerForEvent(actionType, (context, params) => { modifier.numActions--; if (modifier.numActions <= 0) { this.unapplyModifier(modifier); } }, this);
-        }
+        };
 
     unapplyModifier =
         function(revertedModifier) {
@@ -53,7 +54,7 @@ class GameState {
                     })
                 }
             });
-        }
+        };
     
     getFieldValue = 
         function(fieldName) {
@@ -66,7 +67,7 @@ class GameState {
             });
 
             return field.value + totalModifier;
-        }   
- }
+        };
+}
 
  module.exports = GameState;

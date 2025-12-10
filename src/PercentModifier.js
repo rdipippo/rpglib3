@@ -1,7 +1,9 @@
-class PercentModifier {
+let Modifier = require("./Modifier");
+
+class PercentModifier extends Modifier {
     constructor(args) {
+        super(args);
         this.amount = args.value;
-        this.fieldName = args.fieldName
     }
     
     apply = function(gameState, baseVal) {

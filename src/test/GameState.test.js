@@ -31,9 +31,9 @@ test('Percent Modifier', () => {
 
 test('Temporary Modifier', () => {
     let gs = new GameState({'strength': {value: 12}})
-    let sMod = new StaticModifier({fieldName: 'strength', value: 3})
+    let sMod = new StaticModifier({fieldName: 'strength', value: 3, numActions: 2, actionType: 'endTurn'})
 
-    gs.applyTempModifier(sMod, 2, 'endTurn');
+    gs.applyModifier(sMod);
 
     expect(gs.getFieldValue('strength')).toEqual(15)
 

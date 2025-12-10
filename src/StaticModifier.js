@@ -1,7 +1,9 @@
-class StaticModifier {
+let Modifier = require("./Modifier");
+
+class StaticModifier extends Modifier {
     constructor(args) {
+        super(args);
         this.amount = args.value;
-        this.fieldName = args.fieldName
     }
 
     apply = function(gameState, baseVal) {

@@ -1,6 +1,8 @@
-class CustomModifier {
+let Modifier = require("./Modifier");
+
+class CustomModifier extends Modifier {
     constructor(args) {
-        this.fieldName = args.fieldName
+        super(args);
         this.apply = args.apply
         this.unapply = args.unapply;
     }
