@@ -66,7 +66,13 @@ class GameState {
                 totalModifier += individualModifier;
             });
 
-            return field.value + totalModifier;
+            let modifiedValue = field.value + totalModifier;
+
+            if (field.maxValue !== undefined && modifiedValue > field.maxValue) {
+                modifiedValue = field.maxValue;
+            }
+
+            return modifiedValue;
         };
 }
 
