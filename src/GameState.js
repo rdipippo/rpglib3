@@ -74,6 +74,8 @@ class GameState {
 
             if (field.minValue !== undefined && modifiedValue < field.minValue) {
                 modifiedValue = field.minValue;
+            } else if (field.allowNegative === undefined && modifiedValue < 0) {
+                modifiedValue = 0;
             }
 
             return modifiedValue;
