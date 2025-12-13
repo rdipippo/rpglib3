@@ -110,7 +110,7 @@ test('Negative value on modifier', () => {
 
     expect(gs.getFieldValue('strength')).toEqual(0)
 
-    gs.strength.allowNegative = true:
+    gs.strength.allowNegative = true;
     
     expect(gs.getFieldValue('strength')).toEqual(-3)
 })    
