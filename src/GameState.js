@@ -47,7 +47,7 @@ class GameState {
         function(revertedModifier) {
             let field = jp.query(this.schema, "$." + revertedModifier.fieldName)[0];
         
-            field.modifiers.forEach(modifier => {
+            field.modifiers?.forEach(modifier => {
                if (modifier.sourceId.toString() === revertedModifier.sourceId.toString()) {
                     field.modifiers = field.modifiers.filter((value, index, arr) => {
                         return value.sourceId.toString() !== revertedModifier.sourceId.toString();
@@ -61,7 +61,7 @@ class GameState {
             let field = jp.query(this.schema, "$." + fieldName)[0];
             let totalModifier = 0;
 
-            field.modifiers.forEach(modifier => {
+            field.modifiers?.forEach(modifier => {
                 let individualModifier = modifier.apply(this, field.value);
                 totalModifier += individualModifier;
             });
