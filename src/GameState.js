@@ -72,6 +72,10 @@ class GameState {
                 modifiedValue = field.maxValue;
             }
 
+            if (field.minValue !== undefined && modifiedValue < field.minValue) {
+                modifiedValue = field.minValue;
+            }
+
             return modifiedValue;
         };
 }
