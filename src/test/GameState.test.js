@@ -91,6 +91,8 @@ test('Min/Max value on modifier', () => {
     let gs = new GameState({'strength': {value: 12, maxValue: 13, minValue: 10}})
     let sMod = new StaticModifier({fieldName: 'strength', value: 3})
 
+    gs.applyModifier(sMod);
+    
     expect(gs.getFieldValue('strength')).toEqual(13)
 })    
 
