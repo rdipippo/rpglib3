@@ -87,6 +87,13 @@ test('Serialize class', () => {
     expect(sm.apply(null, 12)).toEqual(3)
 })
 
+test('Min/Max value on modifier', () => {
+    let gs = new GameState({'strength': {value: 12, maxValue: 13, minValue: 10}})
+    let sMod = new StaticModifier({fieldName: 'strength', value: 3})
+
+    expect(gs.getFieldValue('strength')).toEqual(13)
+})    
+
 test('Custom Modifier', () => {
     let gs = new GameState({'strength': {value: 12}})
     let cMod = new CustomModifier({fieldName: 'strength', apply: (gameState, baseVal) => { return 3 }})
