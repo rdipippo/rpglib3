@@ -93,11 +93,26 @@ test('Min/Max value on modifier', () => {
 
     gs.applyModifier(sMod);
 
+    expect(gs.getFieldValue('strength')).toEqual(13)
+
     let sMod2 = new StaticModifier({fieldName: 'strength', value: -30})
 
     gs.applyModifier(sMod2);
     
     expect(gs.getFieldValue('strength')).toEqual(10)
+})    
+
+test('Negative value on modifier', () => {
+    let gs = new GameState({'strength': {value: 12, maxValue: 13, minValue: 10}})
+    let sMod = new StaticModifier({fieldName: 'strength', value: -15})
+
+    gs.applyModifier(sMod);
+
+    expect(gs.getFieldValue('strength')).toEqual(0)
+
+    gs.strength.allowNegative = true:
+    
+    expect(gs.getFieldValue('strength')).toEqual(-3)
 })    
 
 test('Custom Modifier', () => {
