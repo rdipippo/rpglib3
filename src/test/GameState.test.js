@@ -89,9 +89,11 @@ test('Serialize class', () => {
 
 test('Min/Max value on modifier', () => {
     let gs = new GameState({'strength': {value: 12, maxValue: 13, minValue: 10}})
-    let sMod = new StaticModifier({fieldName: 'strength', value: 3})
+    let sMod = new StaticModifier({fieldName: 'strength', value: -30})
 
     gs.applyModifier(sMod);
+
+    let sMod2 = expect(gs.getFieldValue('strength')).toEqual(10)
     
     expect(gs.getFieldValue('strength')).toEqual(13)
 })    
