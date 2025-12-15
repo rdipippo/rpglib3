@@ -1,4 +1,4 @@
-let MD5 = require("crypto-js/md5");
+const { randomUUID } = require("crypto");
 let jp = require('jsonpath');
 
 class GameState {
@@ -39,7 +39,7 @@ class GameState {
                 }, this);
            }
 
-           modifier.sourceId = MD5(JSON.stringify(modifier)).toString()
+           modifier.sourceId = randomUUID();
            field.modifiers.push(modifier);
         };
 
