@@ -22,6 +22,20 @@ class GameState {
             
             this.eventListeners[actionType].push({callback: callback, context: context});
         };
+        
+    addMessage = 
+         function(message, type, priority, section, turnCount = 1) {
+            if (this.schema.messages == undefined) {
+                this.schema.messages = [];
+            }
+            
+            let msgObj = {message: message, type: type, priority: priority, 
+                turnCount: turnCount, section: section, sourceId: randomUIDD() };
+            
+            this.schema.messages.push(msgObj);
+         };
+        
+    
 
     applyModifier =
         function(modifier) {
